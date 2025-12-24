@@ -3,11 +3,11 @@
 ## Phase 1: Project Setup & Scaffolding
 
 ### 1.1 Java SMS Sender Service Scaffolding
-- [ ] Generate Spring Boot 3.5.9 project from Spring Initializr
-- [ ] Extract to `JavaSender/` directory
-- [ ] Verify `pom.xml` contains all required dependencies
-- [ ] Verify Maven 3.9+ compatibility
-- [ ] Create directory structure: `src/main/java/com/sms/sender/{controller,service,model,config,kafka}`
+- [x] Generate Spring Boot 3.5.9 project from Spring Initializr
+- [x] Extract to `JavaSender/` directory
+- [x] Verify `pom.xml` contains all required dependencies
+- [x] Verify Maven 3.9+ compatibility
+- [x] Create directory structure: `src/main/java/com/sms/sender/{controller,service,model,config,kafka}`
 
 ### 1.2 Go SMS Store Service Scaffolding
 - [ ] Create `GoStore/` directory
