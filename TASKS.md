@@ -124,7 +124,7 @@
 
 ### 4.2 Go Service Dockerfile
 - [ ] Create `GoStore/Dockerfile` with multi-stage build
-- [ ] Base image: `golang:1.22-alpine` for build
+- [ ] Base image: `golang:1.25-alpine` for build
 - [ ] Runtime image: `alpine:latest`
 - [ ] Copy compiled binary and run
 - [ ] Expose port 8090

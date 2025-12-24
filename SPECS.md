@@ -68,14 +68,21 @@ Java service configuration should be managed via `src/main/resources/application
 ## 3. Service 2: SMS Store (GoLang)
 
 ### Core Stack
-* **Language:** Go 1.22 (Latest Stable).
+* **Language:** Go 1.25.
 * **Server:** Standard Library `net/http` (Strict Requirement: No external web frameworks like Gin/Echo).
 * **Execution:** Will run in a Docker container.
 
 ### Module Requirements (go.mod)
-* **Database:** `go.mongodb.org/mongo-driver` (v1.13.0+).
-* **Kafka Consumer:** `github.com/segmentio/kafka-go` (v0.4.47+) OR `github.com/confluentinc/confluent-kafka-go`.
-    * *Note:* `segmentio` is often easier to setup without CGO dependencies in Docker.
+* **Database:** `go.mongodb.org/mongo-driver` (v1.17.0+). *Go 1.25 Compatible: v1.17.x+ fully supports Go 1.25*.
+* **Kafka Consumer:** `github.com/segmentio/kafka-go` (v0.4.47+) OR `github.com/confluentinc/confluent-kafka-go` (v2.6.0+).
+    * *Note:* `segmentio/kafka-go` v0.4.47+ is Go 1.25 compatible and easier to setup without CGO dependencies in Docker.
+    * *Note:* `confluent-kafka-go` v2.6.0+ supports Go 1.25 but requires librdkafka C library.
+
+**Go 1.25 Compatibility Notes:**
+- All standard library packages (`net/http`, `time`, `context`, etc.) are fully compatible with Go 1.25
+- MongoDB driver v1.17.x+ is tested and compatible with Go 1.25
+- Kafka client libraries are compatible with Go 1.25
+- Recommended to use Go 1.25 for latest performance improvements and security patches
 
 ### Data Structures
 * **Struct:** `SMSRecord`
