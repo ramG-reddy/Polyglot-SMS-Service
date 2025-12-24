@@ -10,10 +10,10 @@
 - [x] Create directory structure: `src/main/java/com/sms/sender/{controller,service,model,config,kafka}`
 
 ### 1.2 Go SMS Store Service Scaffolding
-- [ ] Create `GoStore/` directory
-- [ ] Initialize Go module: `go mod init github.com/yourname/sms-store`
-- [ ] Create directory structure: `{handlers,models,services,kafka,db,config}`
-- [ ] Create basic `main.go` skeleton
+- [x] Create `GoStore/` directory
+- [x] Initialize Go module: `go mod init github.com/yourname/sms-store`
+- [x] Create directory structure: `{handlers,models,services,kafka,db,config}`
+- [x] Create basic `main.go` skeleton
 
 ### 1.3 Docker & Infrastructure Setup
 - [ ] Create `docker-compose.yml` with all 5 services (Kafka, Zookeeper, Redis, MongoDB, Java, Go)
