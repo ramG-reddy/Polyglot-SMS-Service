@@ -16,11 +16,11 @@
 - [x] Create basic `main.go` skeleton
 
 ### 1.3 Docker & Infrastructure Setup
-- [ ] Create `docker-compose.yml` with all 5 services (Kafka, Zookeeper, Redis, MongoDB, Java, Go)
-- [ ] Configure Kafka v7.6.0
-- [ ] Configure Zookeeper v7.6.0
-- [ ] Configure Redis v7.2-alpine
-- [ ] Configure MongoDB v6.0 with non-root user/password
+- [x] Create `docker-compose.yml` with all 5 services (Kafka, Zookeeper, Redis, MongoDB, Java, Go)
+- [x] Configure Kafka v7.6.0
+- [x] Configure Zookeeper v7.6.0
+- [x] Configure Redis v7.2-alpine
+- [x] Configure MongoDB v6.0 with non-root user/password
 
 ---
 
