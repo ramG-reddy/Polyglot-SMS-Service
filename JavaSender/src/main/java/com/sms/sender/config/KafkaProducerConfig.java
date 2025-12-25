@@ -50,10 +50,11 @@ public class KafkaProducerConfig {
         // Idempotence to prevent duplicates
         props.put(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, true);
         
-        // Batch and compression settings for performance
+        // Batch settings for performance
         props.put(ProducerConfig.BATCH_SIZE_CONFIG, 16384);
         props.put(ProducerConfig.LINGER_MS_CONFIG, 10);
-        props.put(ProducerConfig.COMPRESSION_TYPE_CONFIG, "snappy");
+        // No compression - easier for Go consumer to handle
+        props.put(ProducerConfig.COMPRESSION_TYPE_CONFIG, "none");
         
         // Buffer memory
         props.put(ProducerConfig.BUFFER_MEMORY_CONFIG, 33554432);
