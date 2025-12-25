@@ -32,9 +32,10 @@ func main() {
 	}
 	defer db.Close()
 
-	// Create indexes
-	if err := db.CreateIndexes(); err != nil {
-		log.Fatalf("Failed to create indexes: %v", err)
+	// Verify indexes (created by MongoDB initialization script)
+	if err := db.ValidateIndexes(); err != nil {
+		log.Printf("Warning: Index validation failed: %v", err)
+		// Continue anyway - indexes should exist from MongoDB init
 	}
 
 	// Initialize services

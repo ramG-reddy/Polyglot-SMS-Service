@@ -58,66 +58,59 @@ func InitMongoDB(uri, dbName string) error {
 	return nil
 }
 
-// CreateIndexes creates necessary indexes on the sms_records collection
-func CreateIndexes() error {
-	log.Println("Creating MongoDB indexes...")
+// ValidateIndexes verifies that indexes exist on the sms_records collection
+// Indexes are created by MongoDB initialization script on first startup
+func ValidateIndexes() error {
+	log.Println("Verifying MongoDB indexes...")
 
 	collection := Database.Collection(SMSRecordsCollection)
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
-	// First, drop all existing indexes except _id
+	// List existing indexes to verify setup
 	indexView := collection.Indexes()
 	cursor, err := indexView.List(ctx)
 	if err != nil {
-		log.Printf("Warning: Failed to list indexes: %v", err)
-	} else {
-		var existingIndexes []bson.M
-		if err = cursor.All(ctx, &existingIndexes); err != nil {
-			log.Printf("Warning: Failed to decode indexes: %v", err)
-		} else {
-			for _, idx := range existingIndexes {
-				indexName := idx["name"].(string)
-				// Don't drop the default _id index
-				if indexName != "_id_" {
-					log.Printf("Dropping existing index: %s", indexName)
-					if _, err := indexView.DropOne(ctx, indexName); err != nil {
-						log.Printf("Warning: Failed to drop index %s: %v", indexName, err)
-					}
-				}
-			}
+		return fmt.Errorf("failed to list indexes: %w", err)
+	}
+
+	var existingIndexes []bson.M
+	if err = cursor.All(ctx, &existingIndexes); err != nil {
+		return fmt.Errorf("failed to decode indexes: %w", err)
+	}
+
+	// Verify expected indexes exist
+	expectedIndexes := map[string]bool{
+		"_id_":                     false,
+		"idx_user_id":              false,
+		"idx_created_at":           false,
+		"idx_user_id_created_at":   false,
+	}
+
+	for _, idx := range existingIndexes {
+		indexName := idx["name"].(string)
+		if _, expected := expectedIndexes[indexName]; expected {
+			expectedIndexes[indexName] = true
+			log.Printf("✓ Index verified: %s", indexName)
 		}
 	}
 
-	// Define indexes
-	indexes := []mongo.IndexModel{
-		{
-			Keys: bson.D{{Key: "user_id", Value: 1}},
-			Options: options.Index().
-				SetName("idx_user_id"),
-		},
-		{
-			Keys: bson.D{{Key: "created_at", Value: -1}},
-			Options: options.Index().
-				SetName("idx_created_at"),
-		},
-		{
-			Keys: bson.D{
-				{Key: "user_id", Value: 1},
-				{Key: "created_at", Value: -1},
-			},
-			Options: options.Index().
-				SetName("idx_user_id_created_at"),
-		},
+	// Check if any expected indexes are missing
+	missingIndexes := []string{}
+	for indexName, found := range expectedIndexes {
+		if !found && indexName != "_id_" {
+			missingIndexes = append(missingIndexes, indexName)
+		}
 	}
 
-	// Create indexes
-	indexNames, err := collection.Indexes().CreateMany(ctx, indexes)
-	if err != nil {
-		return fmt.Errorf("failed to create indexes: %w", err)
+	if len(missingIndexes) > 0 {
+		log.Printf("WARNING: Missing indexes: %v", missingIndexes)
+		log.Printf("Indexes should be created by MongoDB initialization script")
+		// Don't fail - service can still work, just slower
+	} else {
+		log.Printf("✓ All indexes verified successfully (%d total)", len(existingIndexes))
 	}
 
-	log.Printf("Successfully created %d indexes: %v", len(indexNames), indexNames)
 	return nil
 }
 
