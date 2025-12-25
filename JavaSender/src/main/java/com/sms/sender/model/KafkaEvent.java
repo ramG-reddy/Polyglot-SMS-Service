@@ -57,7 +57,7 @@ public class KafkaEvent {
     /**
      * Helper method to create a Kafka event from request and status
      */
-    public static KafkaEvent from(SmsRequest request, String status, String details) {
+    public static KafkaEvent from(SmsRequest request, String status) {
         return KafkaEvent.builder()
                 .eventId(java.util.UUID.randomUUID().toString())
                 .userId(request.getPhoneNumber())

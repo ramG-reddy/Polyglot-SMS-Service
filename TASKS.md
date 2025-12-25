@@ -51,13 +51,13 @@
 - [x] Implement message serialization to JSON
 
 ### 2.5 REST API & Business Logic
-- [ ] Create `SmsController` for `POST /v0/sms/send` endpoint
-- [ ] Create `SmsService` with core business logic:
+- [x] Create `SmsController` for `POST /v0/sms/send` endpoint
+- [x] Create `SmsService` with core business logic:
   - Check Redis block list
   - Mock 3rd party API call (simulate latency & random 200/500 status)
   - Produce Kafka event
-- [ ] Implement error handling and logging
-- [ ] Add input validation for phoneNumber and message
+- [x] Implement error handling and logging
+- [x] Add input validation for phoneNumber and message
 
 ### 2.6 Testing
 - [ ] Create unit tests for `SmsService`
@@ -225,9 +225,9 @@
 ## Summary
 
 **Total Tasks:** ~80
-**Completed:** 0
+**Completed:** 35
 **In Progress:** 0
-**Remaining:** 80
+**Remaining:** 45
 
 ### Priority Order:
 1. Phase 1: Scaffolding (foundation)
