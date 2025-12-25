@@ -16,8 +16,8 @@ spring:
   # Redis Configuration
   data:
     redis:
-      host: ${SPRING_DATA_REDIS_HOST:localhost}
-      port: ${SPRING_DATA_REDIS_PORT:6379}
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
       timeout: 2000ms
       lettuce:
         pool:
@@ -27,7 +27,7 @@ spring:
 
 # Server Configuration
 server:
-  port: ${SERVER_PORT:8080}
+  port: ${JAVA_SERVICE_PORT:8080}
   error:
     include-message: always
     include-binding-errors: always
@@ -45,7 +45,7 @@ logging:
 # Application-specific Configuration
 app:
   kafka:
-    topic: ${SPRING_KAFKA_TOPIC:sms.events}
+    topic: ${KAFKA_TOPIC:sms.events}
   redis:
     blocklist-key: blocked_users
   mock-vendor:
