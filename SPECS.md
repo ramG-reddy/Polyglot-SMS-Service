@@ -32,12 +32,13 @@ Java service configuration should be managed via `src/main/resources/application
 
 ### Dependency Requirements (pom.xml)
 
-**Dependencies to Add from Spring Initializr:**
+**Dependencies to Add from [Spring Initializer](https://start.spring.io/):**
 1.  **Spring Web** - For creating REST endpoints (`spring-boot-starter-web`)
 2.  **Spring for Apache Kafka** - For producing events (`spring-kafka`)
 3.  **Spring Data Redis (Access+Driver)** - For Block List checks (`spring-boot-starter-data-redis`)
 4.  **Spring Reactive Web** - For WebClient HTTP client (`spring-boot-starter-webflux`)
 5.  **Lombok** - For boilerplate reduction
+6.  **Validation** - For request payload validation (`spring-boot-starter-validation`)
 
 **Automatically Included (No Need to Add):**
 - `spring-boot-starter-test` - Included in every Spring Boot project by default
