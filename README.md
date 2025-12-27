@@ -9,12 +9,19 @@ A distributed microservices architecture demonstrating polyglot persistence and 
 │   Client    │──────────► │  Java SMS Sender │─────────────►│  Go SMS Store   │
 └─────────────┘            │  (Spring Boot)   │              │  (Standard Lib) │
                            └──────────────────┘              └─────────────────┘
-                                    │                                 │
-                                    │ Redis                           │ MongoDB
-                                    ▼                                 ▼
-                            ┌──────────────┐              ┌─────────────────────┐
-                            │  Block List  │              │  SMS Records Store  │
-                            └──────────────┘              └─────────────────────┘
+                                    │ │                              │
+                                    │ │ Redis                        │ MongoDB
+                                    │ ▼                              ▼
+                                    │ ┌──────────────┐    ┌─────────────────────┐
+                                    │ │  Block List  │    │  SMS Records Store  │
+                                    │ └──────────────┘    └─────────────────────┘
+                                    │
+                                    │ HTTP (Mock)
+                                    ▼
+                            ┌──────────────────┐
+                            │ 3rd Party Vendor │
+                            │    SMS API       │
+                            └──────────────────┘
 ```
 
 ### Services
@@ -94,7 +101,7 @@ docker compose down
 
 | File | Purpose |
 |------|---------|
-| **[test.md](test.md)** | Complete test suite with 13 test categories, PowerShell scripts, and validation procedures. |
+| **[TEST_SCRIPTS.md](TEST_SCRIPTS.md)** | Complete test suite with 13 test categories, PowerShell scripts, and validation procedures. |
 | **[TASKS.md](TASKS.md)** | Project task breakdown across 7 phases, tracking implementation progress (77/80 tasks completed). |
 
 ---
@@ -202,11 +209,10 @@ Polyglot/
 |-----------|------------|---------|
 | Java Service | Spring Boot | 3.5.9 |
 | Java Runtime | Eclipse Temurin | 21 |
-| Go Service | Go | 1.23 |
+| Go Service | Go | 1.25 |
 | Message Broker | Apache Kafka | 7.6.0 |
-| Cache | Redis | 7.2-alpine |
+| Cache | Redis | 7.2 |
 | Database | MongoDB | 6.0 |
-| Container Runtime | Docker Compose | 3.8 |
 
 ---
 
@@ -301,17 +307,6 @@ For detailed troubleshooting, see **[test.md](test.md)** Section 17.
 
 ---
 
-## 📊 Performance
-
-- **Java Service Latency**: 150-300ms (includes mock vendor delay)
-- **Go Service Latency**: 10-50ms (read-only queries)
-- **Kafka Throughput**: 1000+ messages/second
-- **End-to-End Latency**: 100-200ms (Java → Kafka → Go → MongoDB)
-
-See **[SPECS.md](SPECS.md)** Section 6 for detailed performance targets.
-
----
-
 ## 🔒 Security Notes
 
 ⚠️ **WARNING**: This is a development/demonstration setup.
@@ -339,22 +334,7 @@ This is a demonstration project for educational purposes.
 1. Follow the architecture principles in **[CONSTITUTION.md](CONSTITUTION.md)**
 2. Adhere to API contracts in **[CONTRACTS.md](CONTRACTS.md)**
 3. Update documentation when making changes
-4. Run full test suite from **[test.md](test.md)**
+4. Run full test suite from **[TEST_SCRIPTS.md](TEST_SCRIPTS.md)**
 5. Ensure all health checks pass
 
----
-
-## 🎓 Learning Resources
-
-- **Architecture**: Read [CONSTITUTION.md](CONSTITUTION.md) for design decisions
-- **Implementation**: Check [SPECS.md](SPECS.md) for technical details
-- **APIs**: Reference [CONTRACTS.md](CONTRACTS.md) for endpoint documentation
-- **Configuration**: See [ENVIRONMENT.md](ENVIRONMENT.md) for all settings
-- **Messaging**: Study [KAFKA_SCHEMA.md](KAFKA_SCHEMA.md) for event schemas
-- **Testing**: Follow [test.md](test.md) for validation procedures
-
----
-
-**Project Status**: ✅ Phase 6 Complete (77/80 tasks) - Production Ready
-
-**Last Updated**: December 26, 2025
+**Last Updated**: December 27, 2025
